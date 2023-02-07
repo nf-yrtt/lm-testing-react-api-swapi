@@ -1,25 +1,28 @@
 import React, { useState, useEffect } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import './App.css';
-import { Person } from './components/Person';
+import { SWAPIPerson, Person } from './components/Person';
 
 function App() {
-  const [persons, setPersons] = useState<Array<Person>>([]);
+  const [persons, setPersons] = useState<Array<SWAPIPerson>>([]);
   useEffect(() => {
     getPersons();
   }, []);
 
   const getPersons = async () => {
     const apiResponse = await fetch(`https://swapi.dev/api/people/?format=json`);
-    const json = await apiResponse.json() as { results: Person[] };
+    const json = await apiResponse.json() as { results: SWAPIPerson[] };
     setPersons(json.results);
   };
 
   return (
-    <div className="person-container">
-      <h2>First Person</h2>
-      <p>Name: {persons[0]===undefined ? "" :persons[0].name}</p>
-    </div>
-    );
+    <>
+      <div className="person-container">
+        <Person {...persons[0]} />
+      </div>
+
+    </>
+  );
 }
 
 export default App;

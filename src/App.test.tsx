@@ -9,3 +9,18 @@ test('check first person is rendered', async () => {
   const nameElement = screen.getByText(/Luke Sky/i);
   expect(nameElement).toBeInTheDocument();
 });
+
+test('check error message on 500', async () => {
+  render(<App />);
+  await waitFor( ()=> screen.findByText(/Oops.../i));
+  const element = screen.getByText(/Oops... something went wrong try again/i);
+  expect(element).toBeInTheDocument();
+});
+
+test('check error message on 418', async () => {
+  render(<App />);
+  await waitFor( ()=> screen.findByText(/418/i));
+  const element = screen.getByText(/418 I'm a tea pot/i);
+  expect(element).toBeInTheDocument();
+});
+
