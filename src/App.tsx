@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import { Person } from './components/Person';
 
 function App() {
+  const [persons, setPersons] = useState<Array<Person>>([]);
+  useEffect(() => {
+    getPersons();
+  }, []);
+
+  const getPersons = async () => {
+    const apiResponse = await fetch(`https://swapi.dev/api/people/?format=json`);
+    const json = await apiResponse.json() as { results: Person[] };
+    setPersons(json.results);
+    console.log()
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="person-container">
+      <h2>First Person</h2>
+      <p>Name: {persons[0]===undefined ? "" :persons[0].name}</p>
     </div>
-  );
+    );
 }
 
 export default App;
