@@ -1,9 +1,11 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import App from './App';
+import { wait } from '@testing-library/user-event/dist/utils';
 
-test('renders learn react link', () => {
+test('check first person is rendered', async () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  await waitFor( ()=> screen.findByText(/Luke Sky/i));
+  const nameElement = screen.getByText(/Luke Sky/i);
+  expect(nameElement).toBeInTheDocument();
 });

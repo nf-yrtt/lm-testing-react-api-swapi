@@ -12,7 +12,6 @@ function App() {
     const apiResponse = await fetch(`https://swapi.dev/api/people/?format=json`);
     const json = await apiResponse.json() as { results: Person[] };
     setPersons(json.results);
-    console.log()
   };
 
   return (
